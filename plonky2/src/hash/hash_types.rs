@@ -31,7 +31,7 @@ pub struct HashOut<F: Field> {
 }
 
 
-#[cfg(feature = "ts-rs")]
+#[cfg(feature = "tsrs")]
 impl<F: Field> ts_rs::TS for HashOut<F> {
     type WithoutGenerics = HashOut<GoldilocksField>;
 
