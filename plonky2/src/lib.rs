@@ -20,7 +20,6 @@ pub mod iop;
 pub mod plonk;
 pub mod recursion;
 pub mod util;
-pub mod serialization_helpers;
 
 #[cfg(test)]
 mod lookup_test;

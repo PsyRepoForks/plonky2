@@ -1137,7 +1137,6 @@ impl<F: RichField + Extendable<D>, const D: usize> CircuitBuilder<F, D> {
         let degree = self.gate_instances.len();
         debug!("Degree after blinding & padding: {}", degree);
         let degree_bits = log2_strict(degree);
-        debug!("builder degree bits: {}", degree_bits);
         let fri_params = self.fri_params(degree_bits);
         assert!(
             fri_params.total_arities() <= degree_bits + rate_bits - cap_height,
@@ -1177,11 +1176,6 @@ impl<F: RichField + Extendable<D>, const D: usize> CircuitBuilder<F, D> {
         );
 
         // Precompute FFT roots.
-        debug!("rate_bits: {}", rate_bits);
-        debug!(
-            "quotient_degree_factor: {}",
-            quotient_degree_factor
-        );
         let max_fft_points = 1 << (degree_bits + max(rate_bits, log2_ceil(quotient_degree_factor)));
         let fft_root_table = fft_root_table(max_fft_points);
 
@@ -1196,8 +1190,8 @@ impl<F: RichField + Extendable<D>, const D: usize> CircuitBuilder<F, D> {
                 Some(&fft_root_table),
             )
         } else {
-            Ok(PolynomialBatch::<F, C, D>::default())
-        }.unwrap(); // todo: handle error
+            PolynomialBatch::<F, C, D>::default()
+        };
 
         // Map between gates where not all generators are used and the gate's number of used generators.
         let incomplete_gates = self
